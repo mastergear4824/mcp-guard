@@ -106,24 +106,21 @@ Works out of the box with built-in default policies. Customize with YAML policy 
 
 ## Protection Coverage
 
-```
-+---------------------+-----------------------+-----------------------+
-|  Tool Definitions   |  Tool Call Arguments  |  Tool Responses       |
-|  (server -> client) |  (client -> server)   |  (server -> client)   |
-+---------------------+-----------------------+-----------------------+
-| Zero-width chars    | SQL Injection         | Credential exposure   |
-| Prompt injection    | Command Injection     | System path leaks     |
-| Homoglyph spoofing  | Path Traversal        | Stack trace exposure  |
-| HTML comment hiding | XSS                   | Command exec evidence |
-| Base64 encoding     | Template Injection    | Template injection    |
-| Name shadowing      | Prompt injection      | Credential leaks      |
-| Multilingual inject | Multilingual inject   |                       |
-| Agent manipulation  | Zero-width hiding     |                       |
-| InputSchema checks  |                       |                       |
-+---------------------+-----------------------+-----------------------+
-  CWE: CWE-22, CWE-78, CWE-79, CWE-89, CWE-94, CWE-200, CWE-209
-  OWASP MCP Top 10: Tool Poisoning, Prompt Injection, and more
-```
+| Tool Definitions (server → client) | Tool Call Arguments (client → server) | Tool Responses (server → client) |
+|:-----------------------------------|:--------------------------------------|:---------------------------------|
+| Zero-width steganography | SQL Injection | Credential exposure |
+| Prompt injection phrases | Command Injection | System path leaks |
+| Homoglyph spoofing | Path Traversal | Stack trace exposure |
+| HTML comment hiding | XSS | Command exec evidence |
+| Base64 encoding hiding | Template Injection | Template injection results |
+| Name shadowing | Prompt injection | Credential leaks |
+| Multilingual injection | Multilingual injection | |
+| Agent manipulation patterns | Zero-width char hiding | |
+| InputSchema validation | | |
+
+**CWE Coverage:** CWE-22, CWE-78, CWE-79, CWE-89, CWE-94, CWE-200, CWE-209
+
+**OWASP MCP Top 10:** Tool Poisoning, Prompt Injection, and more
 
 ---
 
@@ -133,21 +130,15 @@ MCP Guard operates as a **transparent proxy** between client and server.
 
 ### stdio Mode
 
-```
-MCP Client ──stdio──> MCP Guard ──stdio──> MCP Server
-           <──stdio──  (Proxy)  <──stdio──  (Local)
-                          |
-                     Rule Engine
-```
+> **MCP Client** → *stdio* → **MCP Guard (Proxy)** → *stdio* → **MCP Server (Local)**
+>
+> All messages pass through the **Rule Engine** for real-time inspection.
 
 ### HTTP Mode
 
-```
-MCP Client ──HTTP──> MCP Guard ──HTTP──> MCP Server
-           <──SSE──  (:9090)   <──SSE──  (Remote)
-                        |
-                   Rule Engine
-```
+> **MCP Client** → *HTTP POST* → **MCP Guard (:9090)** → *HTTP POST* → **MCP Server (Remote)**
+>
+> Responses (JSON or SSE stream) are inspected before forwarding back to the client.
 
 **Default behavior: Fail-Close.** If the policy engine errors, all traffic is blocked for safety.
 
