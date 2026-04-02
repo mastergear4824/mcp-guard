@@ -1,0 +1,65 @@
+{
+  "name": "@aiclude/mcp-guard",
+  "version": "0.2.1",
+  "description": "MCP runtime security proxy — intercepts and enforces security policies on MCP tool calls",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mcp-guard": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "keywords": [
+    "mcp",
+    "security",
+    "proxy",
+    "guard",
+    "tool-poisoning",
+    "prompt-injection",
+    "model-context-protocol"
+  ],
+  "license": "Apache-2.0",
+  "author": "AIclude <dev@aiclude.com>",
+  "homepage": "https://vs.aiclude.com/mcp-guard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mastergear4824/mcp-guard"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --shims",
+    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "cross-spawn": "^7.0.6",
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

@@ -1,0 +1,47 @@
+# mcp-guard policy configuration
+# Reference: https://github.com/aiclude/mcp-guard
+version: 1
+
+# closed = block all traffic if policy engine errors (recommended)
+# open   = allow traffic through on errors (NOT recommended)
+failMode: closed
+
+logging:
+  level: info      # debug | info | warn | error
+  destination: stderr
+
+rules:
+  # Detect tool definition poisoning in tools/list responses
+  - id: tool-poisoning
+    enabled: true
+    severity: critical
+    action: block        # block | warn
+    type: tool-poisoning
+    config:
+      checkZeroWidth: true
+      checkInjectionPhrases: true
+      checkHtmlComments: true
+      checkBase64: true
+      checkShadowing: true
+      checkInstructionPatterns: true
+      maxDescriptionLength: 5000
+
+  # Detect injection payloads in tools/call request arguments
+  - id: argument-injection
+    enabled: true
+    severity: critical
+    action: block
+    type: argument-injection
+    config:
+      checkPromptInjection: true
+
+  # Detect data exfiltration in tools/call responses
+  - id: data-exfiltration
+    enabled: true
+    severity: high
+    action: warn         # warn by default — blocking may break flows
+    type: data-exfiltration
+    config:
+      checkCredentials: true
+      checkPathExposure: true
+      checkStackTraces: true
