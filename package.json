@@ -1,6 +1,6 @@
 {
   "name": "@aiclude/mcp-guard",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "MCP runtime security proxy — intercepts and enforces security policies on MCP tool calls",
   "type": "module",
   "main": "./dist/index.js",
