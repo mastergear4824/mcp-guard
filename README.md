@@ -19,7 +19,7 @@ In 2026, **MCP (Model Context Protocol)** has become the de facto standard for A
 - **92% exploit probability** with just 10 MCP plugins installed ([VentureBeat](https://venturebeat.com))
 - **OWASP MCP Top 10** published — Tool Poisoning, Prompt Injection, Context Spoofing confirmed as real attack vectors
 
-Existing security tools (WAF, SAST, DAST) don't operate at the MCP protocol level. Attacks happening inside **JSON-RPC message streams** over stdio pipes or SSE are invisible to traditional security tools.
+Existing security tools (WAF, SAST, DAST) don't understand MCP protocol semantics. A WAF can see HTTP requests, but it cannot detect MCP-specific attacks like zero-width character hiding in tool descriptions, tool name spoofing, or prompt injection embedded in tool definitions. In stdio mode, traffic doesn't even use HTTP — it's completely off the radar.
 
 > **MCP Guard** inspects all messages in real-time and **blocks dangerous tool calls before they reach the server**.
 
