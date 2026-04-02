@@ -75,6 +75,25 @@ Add to `.cursor/mcp.json`:
 }
 ```
 
+### Claude Code (CLI) Integration
+
+```bash
+claude mcp add my-server-guarded -- npx -y @aiclude/mcp-guard -- npx -y @some/mcp-server
+```
+
+Or edit `~/.claude/claude_code_config.json` directly:
+
+```json
+{
+  "mcpServers": {
+    "fetch-guarded": {
+      "command": "npx",
+      "args": ["-y", "@aiclude/mcp-guard", "--", "npx", "-y", "@modelcontextprotocol/server-fetch"]
+    }
+  }
+}
+```
+
 ---
 
 ## Key Features
